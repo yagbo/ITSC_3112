@@ -23,10 +23,6 @@ public class BattleDialogBox : MonoBehaviour
     [SerializeField] TextMeshProUGUI ppText;
     [SerializeField] TextMeshProUGUI typeText;
 
-    public void SetDialog(string dialog)
-    {
-        dialogText.text = dialog;
-    }
 
     public IEnumerator TypeDialog(string dialog)
     {
