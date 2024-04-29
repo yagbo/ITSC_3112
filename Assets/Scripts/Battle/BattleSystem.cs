@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 //using System.Diagnostics.Eventing.Reader;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 public enum BattleState { Start, PlayerAction, PlayerMove, EnemyMove, Busy}
 
-public class NewBehaviourScript : MonoBehaviour
+public class BattleSystem : MonoBehaviour
 {
 
     [SerializeField] BattleUnit playerUnit;
@@ -16,11 +17,13 @@ public class NewBehaviourScript : MonoBehaviour
 
     [SerializeField] BattleDialogBox dialogBox;
 
+    public event Action<bool> OnBattleOver;             // lets us know if player won or lost battle
+
     BattleState state;
     int currentAction;
     int currentMove;
 
-    private void Start()
+    public void StartBattle()
     {
         StartCoroutine(SetupBattle());
     }
@@ -65,6 +68,7 @@ public class NewBehaviourScript : MonoBehaviour
     IEnumerator PerformPlayerMove()
     {
         state = BattleState.Busy;
+        playerUnit.Pokemon.Moves[currentMove].PP -= 1;
         var move = playerUnit.Pokemon.Moves[currentMove];
         yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} used {move.Base.Name}");
 
@@ -81,6 +85,10 @@ public class NewBehaviourScript : MonoBehaviour
         {
             yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} Fainted");
             enemyUnit.PlayFaintAnimation();
+
+            yield return new WaitForSeconds(2f);
+            OnBattleOver(true);
+
         }
         else
         {
@@ -109,6 +117,9 @@ public class NewBehaviourScript : MonoBehaviour
         {
             yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} Fainted");
             playerUnit.PlayFaintAnimation();
+
+            yield return new WaitForSeconds(2f);
+            OnBattleOver(false);
         }
         else
         {
@@ -136,7 +147,7 @@ public class NewBehaviourScript : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void HandleUpdate()
     {
         if (state == BattleState.PlayerAction)
         {

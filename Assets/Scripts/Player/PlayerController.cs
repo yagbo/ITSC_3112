@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour
     public LayerMask solidObjectsLayer;
     public LayerMask GrassLayer;
     public float moveSpeed;
+
+    public event Action onEncountered;
+
+
     private Vector2 input;
     private bool isMoving;
     private Animator animator;
@@ -16,15 +20,10 @@ public class PlayerController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Instantiate global variables here if necessary (player position after entering a door)
-        // None for now
-    }
-
+    
     // Update is called once per frame
-    void Update()
+    // we changed this to HandleUpdate so that we can manually call the function instead of it being automatically called every frame
+    public void HandleUpdate()
     {
         if (!isMoving)
         {
@@ -86,8 +85,10 @@ public class PlayerController : MonoBehaviour
         if (Physics2D.OverlapCircle(targetPos, 0.2f, GrassLayer) != null)
         {
             if(UnityEngine.Random.Range(1,101) <= 10)
-            { 
-                UnityEngine.Debug.Log("you ran into a wild pokemon");
+            {
+                animator.SetBool("isMoving", false);    // makes player stop walking when we get into a battle
+                onEncountered();
+                
             }   
         }
     }

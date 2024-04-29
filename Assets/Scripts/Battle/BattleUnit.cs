@@ -37,6 +37,7 @@ public class BattleUnit : MonoBehaviour
         else
             image.sprite = Pokemon.Base.frontSprite;
 
+        image.color = originalColor;                    // makes pokemon look normal when we encounter them again, when they die they lose color, this revives their color
         PlayEnterAnimation();
     }   
 

@@ -2,17 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum GameState { FreeRoam, Battle}
+
+
 public class GameController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    [SerializeField] PlayerController playerController;
+    [SerializeField] BattleSystem battleSystem;
+    [SerializeField] Camera worldCamera;
+
+    GameState state;
+
+    private void Start()
     {
-        
+        playerController.onEncountered += StartBattle;
+        battleSystem.OnBattleOver += EndBattle;
     }
 
-    // Update is called once per frame
-    void Update()
+    void StartBattle()
     {
-        
+        state = GameState.Battle;
+        battleSystem.gameObject.SetActive(true);
+        worldCamera.gameObject.SetActive(false);
+
+        battleSystem.StartBattle();                 // makes a new battle every encounter
+    }
+
+    void EndBattle(bool won)
+    {
+        state = GameState.FreeRoam;
+        battleSystem.gameObject.SetActive(false);
+        worldCamera.gameObject.SetActive(true);
+    }
+
+    private void Update()
+    {
+        if (state == GameState.FreeRoam)
+        {
+            playerController.HandleUpdate();
+        }
+        else if (state == GameState.Battle) 
+        { 
+            battleSystem.HandleUpdate();
+        }
     }
 }
