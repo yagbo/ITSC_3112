@@ -30,9 +30,9 @@ public class PokemonBase : ScriptableObject
     [SerializeField] int maxHp;                // Maximum hit points (HP)
     [SerializeField] int attack;               // Attack stat
     [SerializeField] int defense;              // Defense stat
-    [SerializeField] int spAttack;             // Special attack stat
-    [SerializeField] int spDefense;            // Special defense stat
-    [SerializeField] int speed;                // Speed stat
+    [SerializeField] int spAttack;             // Special attack stat       these weren't used
+    [SerializeField] int spDefense;            // Special defense stat      these weren't used
+    [SerializeField] int speed;                // Speed stat                these weren't used
 
     [SerializeField] List<LearnableMove> learnableMoves; // List of moves that the Pokémon can learn
 
@@ -143,6 +143,14 @@ public enum PokemonType
     Steel
 }
 
+
+/*
+ 
+The TypeChart class helps us determine the TypeAdvantage of a move against a defending Pokemon. 
+For example, fire moves are super effective against grass types, so they will do extra damage
+             grass moves are less effective against fire types, so they will do less damage
+ 
+ */
 public class TypeChart
 {
     static float[][] chart =
@@ -166,16 +174,17 @@ public class TypeChart
         /* STE */ new float[] { 1f, 0.5f, 0.5f, 0.5f, 1f, 2f,  1f,  1f,  1f,  1f,  1f,  1f,  2f,  1f,  1f,  1f,  0.5f }
     };
 
+    // method that takes type of the Attacking move and the defending pokemon and returns the corresponding number from the chart above
     public static float GetEffectiveness(PokemonType attackType, PokemonType defenseType)
     {
-        if (attackType == PokemonType.None || defenseType == PokemonType.None)
-        {
-            return 1;
+        if (attackType == PokemonType.None || defenseType == PokemonType.None)      // if a pokemons secondary type is None, then we return 1
+        {                                                // when we call the method we will multiply GetEffectiveness(attack, defenseType1) * GetEffectiveness(attack, defenseType2) 
+            return 1;                                    // this if statement makes it so that a Pokemon with only 1 type will still recieve the correct Type Multiplier
         }
-        int row = (int)attackType - 1;
-        int col = (int)defenseType - 1;
+        int row = (int)attackType - 1;          // we decrement 1 because None is in position 0 but the chart doesn't account for None
+        int col = (int)defenseType - 1;         // we decrement 1 because None is in position 0 but the chart doesn't account for None
 
-        return chart[row][col];
+        return chart[row][col];                 // return the type advantage multiplier
     }
 }
 
