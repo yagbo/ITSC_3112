@@ -14,33 +14,6 @@ public class HPBar : MonoBehaviour
     [SerializeField] TextMeshProUGUI hpText;
 
 
-    // Start is called before the first frame update
-
-    /*
-     * 
-     * this transforms the gameobject scale to x=.5, y=1
-     * 
-     * this line of code shows us how the transform.localScale property works
-     * 
-    
-
-    void Start()
-    {
-        health.transform.localScale = new Vector3(1f,1f);
-    }
-
-    */
-
-    // IMPORTANT    IMPORTANT    IMPORTANT    IMPORTANT    IMPORTANT    IMPORTANT    IMPORTANT    IMPORTANT    IMPORTANT    
-
-    //  I STILL DON'T KNOW HOW THE HPNORMALIZED VARIALBE IS GRABBED, UNDERSTAND THIS BEFORE THE PRESENTATION IS DUE
-
-    // HPNormalized is a decimal between 0-1. when it is passed in the battlehud class 
-
-    // IMPORTANT    IMPORTANT    IMPORTANT    IMPORTANT    IMPORTANT    IMPORTANT    IMPORTANT    IMPORTANT    IMPORTANT    
-
-
-
     // this method is the same as the one above except instead of a setting x to a static .5f, we have a dynamic float variable
     public void SetHP(float hpNormalized)
     {
