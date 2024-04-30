@@ -4,24 +4,30 @@ using UnityEngine;
 using TMPro;
 
 
+/*
+ 
+This class controls the dialogBox. It has methods to show or hide all of the text options in the dialogbox.
+ 
+ */
 public class BattleDialogBox : MonoBehaviour
 {
 
-    [SerializeField] int lettersPerSecond;
+    [SerializeField] int lettersPerSecond;   // how fast text is shown
     [SerializeField] Color highlightedColor; // in Unity Editor make sure to set the opacity to full in order to see the color
 
-    [SerializeField] TextMeshProUGUI dialogText;
-    [SerializeField] GameObject actionSelector;
-    [SerializeField] GameObject moveSelector;
-    [SerializeField] GameObject moveDetails;
+    [SerializeField] TextMeshProUGUI dialogText; // text object for the dialogText ex: Charmander fainted
+    [SerializeField] GameObject actionSelector;  // gameObject that holds a list of actions 
+    [SerializeField] GameObject moveSelector;   // gameObject that holds a list of moves 
+    [SerializeField] GameObject moveDetails;    // moveDetails (PP, Type) gameObject
 
-    [SerializeField] List<TextMeshProUGUI> actionTexts;
-    [SerializeField] List<TextMeshProUGUI> moveTexts;
+    [SerializeField] List<TextMeshProUGUI> actionTexts; // list of actions
+    [SerializeField] List<TextMeshProUGUI> moveTexts;   // list of moves
 
-    [SerializeField] TextMeshProUGUI ppText;
-    [SerializeField] TextMeshProUGUI typeText;
+    [SerializeField] TextMeshProUGUI ppText;            // PP text for moveDetails
+    [SerializeField] TextMeshProUGUI typeText;          // type Text for moveDetails
 
 
+    // method that types dialog letter by letter
     public IEnumerator TypeDialog(string dialog)
     {
         dialogText.text = "";
@@ -32,16 +38,19 @@ public class BattleDialogBox : MonoBehaviour
         }
     }
     
+    // method that enables the dialogtext Text Object
     public void EnableDialogText(bool enabled)
     {
         dialogText.enabled = enabled;
     }
 
+    // method that enables the Action Selector list of actions
     public void EnableActionSelector(bool enabled)
     {
         actionSelector.SetActive(enabled);
     }
 
+    // method that enables the move selector list of moves
     public void EnableMoveSelector(bool enabled)
     {
         moveSelector.SetActive(enabled);

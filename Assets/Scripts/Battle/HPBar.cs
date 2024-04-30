@@ -2,6 +2,13 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 
+/*
+ 
+ This class keeps track of the physical green HPBar and the text beneath the HPBar.
+the health GameObject is the green HPBar and the hpText TextMeshProUGUI is the HPText
+SetHPSmooth is for the HPBar, SetHPTextSmooth is for The HpText
+ 
+ */
 public class HPBar : MonoBehaviour
 {
 

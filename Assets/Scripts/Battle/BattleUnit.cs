@@ -2,6 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+/*
+ 
+This class controls the PokemonSprite in the BattleSystem. We need its PokeBase and level to print out the 
+PlayerHud and we need to know if isPlayerUnit so that we can show the front or back sprite. 
+
+In this class we also have the sprites enter animation, attack animation, hit animation and faint animation.
+ 
+ */
 public class BattleUnit : MonoBehaviour
 {
 
@@ -16,6 +24,7 @@ public class BattleUnit : MonoBehaviour
     private Vector3 originalPos;    // local position gives us the images coordinates in relation to the canvas, as opposed to the world
     Color originalColor;
 
+    // when the battle starts we store the original sprite, position, and color in this method so that we can use it in future methods
     private void Awake()
     {
         image = GetComponent<Image>();
@@ -66,6 +75,7 @@ public class BattleUnit : MonoBehaviour
         sequence.Append(image.transform.DOLocalMoveX(originalPos.x, .25f));
     }
 
+    // method that shows a pokemon was hit, we make it gray for a bit then make it the original color again
     public void PlayHitAnimation()
     {
         var sequence = DOTween.Sequence();
@@ -73,6 +83,7 @@ public class BattleUnit : MonoBehaviour
         sequence.Append(image.DOColor(originalColor, .1f));
     }
 
+    // method that shows a pokemon faint. We send it down and have it fade away
     public void PlayFaintAnimation()
     {
         var sequence = DOTween.Sequence();

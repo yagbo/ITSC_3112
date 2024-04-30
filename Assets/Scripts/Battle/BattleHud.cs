@@ -14,6 +14,8 @@ public class BattleHud : MonoBehaviour
     [SerializeField] TextMeshProUGUI hpText;
 
     Pokemon _pokemon; // we use this local Pokemon object so that we can update the HP without having to use a Pokemon parameter
+    
+    // method that sets the data before the battle begins
     public void SetData(Pokemon pokemon)
     {
         _pokemon = pokemon;
@@ -23,6 +25,7 @@ public class BattleHud : MonoBehaviour
         hpText.text = pokemon.HP + "/" + pokemon.MaxHP;
     }
 
+    // method that updates the HPBar and HPText
     public IEnumerator UpdateHP()
     {
         yield return hpBar.SetHPSmooth((float)_pokemon.HP / _pokemon.MaxHP);

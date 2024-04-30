@@ -28,20 +28,20 @@ public enum BattleState { Start, PlayerAction, PlayerMove, EnemyMove, Busy }
 public class BattleSystem : MonoBehaviour
 {
     // fields
-    [SerializeField] BattleUnit playerUnit;
-    [SerializeField] BattleHud playerHud;
+    [SerializeField] BattleUnit playerUnit;             // player pokemon
+    [SerializeField] BattleHud playerHud;               // player hud
 
-    [SerializeField] BattleUnit enemyUnit;
-    [SerializeField] BattleHud enemyHud;
+    [SerializeField] BattleUnit enemyUnit;              // enemy pokemon
+    [SerializeField] BattleHud enemyHud;                // enemy hud
 
-    [SerializeField] BattleDialogBox dialogBox;
+    [SerializeField] BattleDialogBox dialogBox;         // dialogBox
 
     public event Action<bool> OnBattleOver;             // lets us know if player won or lost battle
 
-    BattleState state;
-    int currentAction;
-    int currentMove;
-    int escapeAttempts;
+    BattleState state;                                  // keeps track of the current BattleState
+    int currentAction;                                  // currentAction tracker for the user during the ActionSelector
+    int currentMove;                                    // currentMove tracker for the user during the MoveSelector
+    int escapeAttempts;                                 // keeps track of escapeAttempts
     // Initiate the battle
     public void StartBattle()
     {
@@ -72,6 +72,7 @@ public class BattleSystem : MonoBehaviour
         PlayerAction();
     }
 
+    // method that sets the BattleState to PlayerAction, enables the dialog Box, and prompts user to select an action
     void PlayerAction()
     {
         state = BattleState.PlayerAction;
