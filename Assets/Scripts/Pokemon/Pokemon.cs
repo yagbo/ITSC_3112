@@ -7,7 +7,7 @@ using UnityEngine;
 # Pokemon Class Documentation
 
 
-The `Pokemon` class represents a Pokémon entity within a game. This is the pokemon object
+The `Pokemon` class represents a PokÃ©mon entity within a game. This is the pokemon object
 that is created when we create a pokemon in unity. We can add them by right clicking,
 and creating a Pokemon game object, then we will add all the required information. 
 This object is also used to keep track of the HP and PP of the moves it has learned.
@@ -99,10 +99,11 @@ public class Pokemon
             Fainted = false
         };
 
-
+        float attack = (move.Base.IsSpecial) ? attacker.SpAttack : attacker.Attack;
+        float defense = (move.Base.IsSpecial) ? SpDefense : Defense;
         float modifiers = UnityEngine.Random.Range(.85f, 1f) * type * critical;
         float a = (2 * attacker.Level + 10) / 250f;
-        float d = a * move.Base.Power * ((float)attacker.Attack / Defense) /*+ 2*/;
+        float d = a * move.Base.Power * ((float)attack / defense) /*+ 2*/;
         int damage = Mathf.FloorToInt(d * modifiers);
         Damage = damage;
         HP -= damage;
