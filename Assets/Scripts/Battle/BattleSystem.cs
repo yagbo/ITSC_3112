@@ -41,7 +41,7 @@ public class BattleSystem : MonoBehaviour
     BattleState state;
     int currentAction;
     int currentMove;
-
+    int escapeAttempts;
     // Initiate the battle
     public void StartBattle()
     {
@@ -64,7 +64,10 @@ public class BattleSystem : MonoBehaviour
 
         // wait for 1 second
         yield return new WaitForSeconds(1f);
-
+      
+        // at the beginning of the battle, the number of escape attempts is 0;
+        escapeAttempts =0;
+        
         // call the player action method
         PlayerAction();
     }
@@ -184,12 +187,46 @@ public class BattleSystem : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
     }
+    // Execute if the player tries to run from battle
+    IEnumerator TryToEscape(){
+      state = BattleState.Busy;
+      // increment escape attempts
+      ++escapeAttempts;
+
+    // get speeds of Pokemon
+      int playerSpeed = playerUnit.Pokemon.Speed;
+      int enemySpeed = enemyUnit.Pokemon.Speed;
+
+   // The player will automatically be able to escape if their Pokemon's speed is higher
+      if (enemySpeed < playerSpeed){
+           yield return dialogBox.TypeDialog($"Ran Away Safely!");
+            OnBattleOver(true);
+    }
+     
+      else{
+      // Otherwise calculate the escape chance using the following formula
+          float f = (playerSpeed * 128)/enemySpeed + 30 * escapeAttempts;
+          f = f%256;
+          
+          // Determine whether the player can escape or not
+          if(UnityEngine.Random.Range(0,256) < f){
+            yield return dialogBox.TypeDialog($"Ran Away Safely!");
+            OnBattleOver(true);
+          }
+          else{
+           yield return dialogBox.TypeDialog($"Can't escape!");
+           // The opponent will attack if the escape attempt fails
+           StartCoroutine(EnemyMove());
+          }
+    }
+    }
 
     // Handle actions whether a player is choosing what to do or what move to use
     public void HandleUpdate()
     {
         if (state == BattleState.PlayerAction)
         {
+           
             HandleActionSelection();
         }
 
@@ -234,6 +271,7 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 1)
             {
                 // run
+                TryToEscape();
             }
         }
     }
