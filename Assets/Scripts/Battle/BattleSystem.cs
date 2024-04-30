@@ -42,7 +42,7 @@ public class BattleSystem : MonoBehaviour
     BattleState state;
     int currentAction;
     int currentMove;
-
+    int escapeAttempts;
     // Initiate the battle
     public void StartBattle()
     {
@@ -65,7 +65,10 @@ public class BattleSystem : MonoBehaviour
 
         // wait for 1 second
         yield return new WaitForSeconds(1f);
-
+      
+        // at the beginning of the battle, the number of escape attempts is 0;
+        escapeAttempts =0;
+        
         // call the player action method
         PlayerAction();
     }
@@ -185,12 +188,37 @@ public class BattleSystem : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
     }
+    IEnumerator TryToEscape(){
+    state = BattleState.Busy;
+    // increment escape attempts
+    ++escapeAttempts;
+    int playerSpeed = playerUnit.Pokemon.Speed;
+    int enemySpeed = enemyUnit.Pokemon.Speed;
+
+    if (enemySpeed < playerSpeed){
+           yield return dialogBox.TypeDialog($"Ran Away Safely!");
+            OnBattleOver(true);
+    }
+    else{
+          float f = (playerSpeed * 128)/enemySpeed + 30 * escapeAttempts;
+          f = f%256;
+          if(UnityEngine.Random.Range(0,256) < f){
+            yield return dialogBox.TypeDialog($"Ran Away Safely!");
+            OnBattleOver(true);
+          }
+          else{
+           yield return dialogBox.TypeDialog($"Can't escape!");
+          
+          }
+    }
+    }
 
     // Handle actions whether a player is choosing what to do or what move to use
     public void HandleUpdate()
     {
         if (state == BattleState.PlayerAction)
         {
+           
             HandleActionSelection();
         }
 
