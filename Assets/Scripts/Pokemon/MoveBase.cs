@@ -19,8 +19,8 @@ This is an object class that can be used to define moves
    - Once created, select the move asset from the Project window.
    - In the Inspector window, you can edit properties such as move name, description, type, power, accuracy, and PP.
 
-3. **Integration with Pokémon System:**
-   - Use the created move assets within your Pokémon system to assign moves to Pokémon entities.
+3. **Integration with PokÃ©mon System:**
+   - Use the created move assets within your PokÃ©mon system to assign moves to PokÃ©mon entities.
    - You can access move properties within the code for gameplay mechanics, such as dealing damage, applying status effects, etc.
 
 */
@@ -75,5 +75,18 @@ public class MoveBase : ScriptableObject
     public int PP
     {
         get { return pp; }
+    }
+
+    public bool IsSpecial
+    {
+    get{
+    if (type== PokemonType.Fire|| type== PokemonType.Water ||type== PokemonType.Grass
+    ||type== PokemonType.Ice||type== PokemonType.Electric||type== PokemonType.Dragon){
+      return true;
+    }
+    else{
+    return false;
+    }
+    }
     }
 }
