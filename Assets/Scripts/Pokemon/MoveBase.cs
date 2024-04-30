@@ -42,6 +42,7 @@ public class MoveBase : ScriptableObject
     [SerializeField] int power;             // the power of the move
     [SerializeField] int accuracy;          // the accuracy of the move
     [SerializeField] int pp;                // power points
+    
 
 
 
@@ -77,9 +78,11 @@ public class MoveBase : ScriptableObject
         get { return pp; }
     }
 
+// This is whether a move is special or physical
     public bool IsSpecial
     {
     get{
+    // These types are typically used for special moves
     if (type== PokemonType.Fire|| type== PokemonType.Water ||type== PokemonType.Grass
     ||type== PokemonType.Ice||type== PokemonType.Electric||type== PokemonType.Dragon){
       return true;
