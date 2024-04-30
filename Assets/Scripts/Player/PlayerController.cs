@@ -2,19 +2,27 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+
+/*
+ 
+Class that controls the player sprite. depending on which direction we move it changes the sprite to the according direction
+If we run into a wall it stops us and if we're walking in grass theres a chance we encounter a pokemon
+ 
+ */
+
 public class PlayerController : MonoBehaviour
 {
 
-    public LayerMask solidObjectsLayer;
-    public LayerMask GrassLayer;
-    public float moveSpeed;
+    public LayerMask solidObjectsLayer;     // Layer that has walls we cannot run through
+    public LayerMask GrassLayer;            // grass layer, if we walk through we may encounter a pokemon
+    public float moveSpeed;                 // how fast the player moves
 
-    public event Action onEncountered;
+    public event Action onEncountered;      // event based variable that tells us if we encountered a pokemon, makes changing into the BattleSystem easy
 
 
-    private Vector2 input;
-    private bool isMoving;
-    private Animator animator;
+    private Vector2 input;                  // grabs the current position of the player
+    private bool isMoving;                  // if we are still moving then we start the running animation
+    private Animator animator;              // calls the Animator from Unity Editor that controls what sprite goes with what direction
 
     private void Awake()
     {

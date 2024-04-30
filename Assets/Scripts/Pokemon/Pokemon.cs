@@ -15,12 +15,13 @@ This object is also used to keep track of the HP and PP of the moves it has lear
 
 public class Pokemon
 {
-    public PokemonBase Base { get; set; }
-    public int Level { get; set; }
+    public PokemonBase Base { get; set; }           // PokemonBase
+    public int Level { get; set; }                  // level
 
-    public int HP {  get; set; }
-    public List<Move> Moves { get; set; }
-    public int Damage { get; set; }
+    public int HP {  get; set; }                    // currentHP
+    public List<Move> Moves { get; set; }           // list of moves 
+    public int Damage { get; set; }                 // damage done
+    
     // Pokemon Constructor
     public Pokemon(PokemonBase pbase, int plevel)
     {
@@ -49,7 +50,6 @@ public class Pokemon
 
 
     // constructor, this is so that we can get the stats of a pokemon during the game.
-
     public int Attack
     {
         get { return Mathf.FloorToInt((Base.Attack * Level) / 100f) + 5; }
@@ -80,6 +80,7 @@ public class Pokemon
         get { return Mathf.FloorToInt((Base.MaxHp * Level) / 100f) + 10; }
     }
 
+    // method that calculates how much damage an attack will do to a defending pokemon
     public DamageDetails TakeDamage(Move move, Pokemon attacker)
     {
         float critical = 1f;
@@ -115,6 +116,8 @@ public class Pokemon
         return damageDetails;
     }
 
+
+    // selects a random move for the enemy pokemon
     public Move GetRandomMove()
     {
         int r = UnityEngine.Random.Range(0, Moves.Count);
@@ -122,6 +125,7 @@ public class Pokemon
     }
 }
 
+// class that keeps track of if a pokemon fainted, if the move was a critical hit and if it was super effective or not
 public class DamageDetails
 {
     public bool Fainted { get; set; }
