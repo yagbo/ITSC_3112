@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 
 // we inport TMPro so that we can use the Text class

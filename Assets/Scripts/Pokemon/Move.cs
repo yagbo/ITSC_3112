@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
 /*
  
 This class is to keep track of the current Move that a Pokemon knows. This is used to 

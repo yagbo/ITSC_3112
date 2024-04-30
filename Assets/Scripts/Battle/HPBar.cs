@@ -1,9 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Collections.Specialized;
-using System.Runtime.InteropServices;
-using System.Threading;
 using UnityEngine;
 using TMPro;
 
